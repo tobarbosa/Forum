@@ -106,6 +106,6 @@ class TopicController extends Controller
     public function delete(Topic $topic)
     {
         $topic->delete();
-        return back()->with('success', 'Registro excluído com sucesso');
+        return back()->with('success', 'Tópico excluído com sucesso');
     }
 }

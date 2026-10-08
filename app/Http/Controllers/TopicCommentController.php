@@ -24,4 +24,10 @@ class TopicCommentController extends Controller
         //     'topic' => $topic
         // ]);
     }
+
+    public function delete(TopicComment $comment)
+    {
+        $comment->delete();
+        return back()->with('success', 'Comentário excluído com sucesso');
+    }
 }

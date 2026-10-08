@@ -135,9 +135,9 @@
             @if ($topic->comments->isNotEmpty())
                 <ul>
                     @foreach ($topic->comments as $comment)
-                        <li class="border p-2">
-                            <div class="flex flex-col">
-                                <div class="flex flex-col gap-1">
+                        <li class="">
+                            <div class="flex flex-raw border">
+                                <div class="flex flex-col gap-1 w-19/20 p-2">
                                     <div class="font-bold">
                                         <p>{{ $comment->user->name }}</p>
                                         <p class="text-xs">{{ $comment->user->username }}</p>
@@ -150,22 +150,28 @@
                                         {{ $comment->created_at->format('d/m/Y H:i') }}
                                     </p>
                                 </div>
-                                {{-- <div class="flex flex-col justify-end gap-1 w-1/20 text-gray-700">
-                                    <button class="flex justify-center items-center h-1/2 bg-red-200 rounded-t-md">
-                                        <x-lucide-square-pen class="h-10 w-10" />
+                                <div class="flex flex-col gap-1 w-1/20 text-gray-700 p-1">
+                                    <button class="flex justify-center items-center h-1/2 bg-red-200 rounded-tl-md">
+                                        <x-lucide-square-pen
+                                            class="h-10 w-10 transition-all duration-150 hover:h-11 hover:w-11 hover:stroke-2" />
                                     </button>
-                                    <form action="{{ route('topic.delete', ['topic' => $topic->id]) }}" method="post"
-                                        onsubmit="return confirm('Deseja realmente excluir este tópico?')"
-                                        class="flex flex-col justify-center items-center h-1/2 py-2 pl-1 bg-red-200 rounded-b-md">
+                                    <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
+                                        method="post"
+                                        onsubmit="return confirm('Deseja realmente excluir este comentário?')"
+                                        class="flex flex-col justify-center items-center h-1/2 py-2 pl-1 bg-red-200 rounded-bl-md">
                                         @csrf
                                         @method('DELETE')
 
                                         <button type="submit">
-                                            <x-lucide-trash class="text-red-500 w-10 h-10" />
+                                            <x-lucide-trash
+                                                class="text-red-500 w-10 h-10 transition-all duration-150 hover:h-11 hover:w-11 hover:stroke-2" />
                                         </button>
                                     </form>
-                                </div> --}}
+                                </div>
                             </div>
+                            {{-- <div>
+                                <form action="" method="post"></form>
+                            </div> --}}
                         </li>
                     @endforeach
                 </ul>

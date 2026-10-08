@@ -46,7 +46,8 @@ Route::prefix('topics')->group(function () {
 });
 
 Route::prefix('comment')->group(function () {
-    Route::post('{topic}/user/{user}/comment', [TopicCommentController::class, 'comment'])->middleware(['auth'])->name('comment');
+    Route::post('topic/{topic}/user/{user}/comment', [TopicCommentController::class, 'comment'])->middleware(['auth'])->name('comment');
+    Route::delete('{comment}/delete', [TopicCommentController::class, 'delete'])->middleware(['auth'])->name('comment.delete');
 });
 
 Route::prefix('list-items')->group(function () {
