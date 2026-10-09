@@ -40,8 +40,8 @@ Aqui estão algumas capturas de tela da aplicação:
 
 1. Clone o repositório:
    ```bash
-   git clone git@github.com:SEU_USUARIO/NOME_DO_REPO.git
-   cd NOME_DO_REPO
+   git clone git@github.com:tobarbosa/Forum.git
+   cd Forum
    ```
 
 2. Inicie o ambiente Docker (Laravel Sail):
