@@ -41,22 +41,31 @@ Aqui estão algumas capturas de tela da aplicação:
 1. Clone o repositório:
    ```bash
    git clone git@github.com:SEU_USUARIO/NOME_DO_REPO.git
+   cd NOME_DO_REPO
    ```
-2. Instale as dependências do PHP:
+
+2. Inicie o ambiente Docker (Laravel Sail):
    ```bash
-   composer install
+   ./vendor/bin/sail up -d
    ```
-3. Instale as dependências do Frontend:
+
+3. Instale as dependências do PHP e do Frontend:
    ```bash
-   npm install && npm run dev
+   ./vendor/bin/sail composer install
+   ./vendor/bin/sail npm install
+   ./vendor/bin/sail npm run dev
    ```
-4. Configure o arquivo `.env` com suas credenciais de banco de dados.
-5. Gere a chave da aplicação e rode as migrations:
+
+4. Configure o arquivo `.env`:
    ```bash
-   php artisan key:generate
-   php artisan migrate
+   cp .env.example .env
    ```
-6. Inicie o servidor:
+
+5. Gere a chave da aplicação e execute as migrations:
    ```bash
-   php artisan serve
+   ./vendor/bin/sail artisan key:generate
+   ./vendor/bin/sail artisan migrate
    ```
+
+6. Acesse a aplicação no navegador:
+   `http://localhost`
