@@ -56,6 +56,17 @@
             rightButtonStyle.replace(/(text-gray-)[\d]+/, "$10")
         nextButton.setAttribute('class', rightButtonStyle);
     }
+
+    function editComment(commentId, comment) {
+        let edit = document.getElementById("edit-" + commentId);
+        let editComment = document.getElementById("editComment-" + commentId);
+
+        edit.hidden = !edit.hidden;
+
+        if (!edit.hidden) {
+            editComment.value = comment;
+        }
+    }
 </script>
 
 @php
@@ -136,8 +147,8 @@
                 <ul>
                     @foreach ($topic->comments as $comment)
                         <li class="">
-                            <div class="flex flex-raw border">
-                                <div class="flex flex-col gap-1 w-19/20 p-2">
+                            <div id="comment-{{ $comment->id }}" class="flex flex-raw border">
+                                <div class="flex flex-col gap-1 p-2 {{ Auth::check() ? 'w-19/20' : 'w-full' }}">
                                     <div class="font-bold">
                                         <p>{{ $comment->user->name }}</p>
                                         <p class="text-xs">{{ $comment->user->username }}</p>
@@ -150,28 +161,40 @@
                                         {{ $comment->created_at->format('d/m/Y H:i') }}
                                     </p>
                                 </div>
-                                <div class="flex flex-col gap-1 w-1/20 text-gray-700 p-1">
-                                    <button class="flex justify-center items-center h-1/2 bg-red-200 rounded-tl-md">
-                                        <x-lucide-square-pen
-                                            class="h-10 w-10 transition-all duration-150 hover:h-11 hover:w-11 hover:stroke-2" />
-                                    </button>
-                                    <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
-                                        method="post"
-                                        onsubmit="return confirm('Deseja realmente excluir este comentário?')"
-                                        class="flex flex-col justify-center items-center h-1/2 py-2 pl-1 bg-red-200 rounded-bl-md">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit">
-                                            <x-lucide-trash
-                                                class="text-red-500 w-10 h-10 transition-all duration-150 hover:h-11 hover:w-11 hover:stroke-2" />
+                                @auth
+                                    <div class="flex flex-col gap-1 w-1/20 text-gray-700 p-1">
+                                        <button class="flex justify-center items-center h-1/2 bg-red-200 rounded-tl-md"
+                                            onclick="editComment({{ $comment->id }}, {{ Js::from($comment->comment) }})">
+                                            <x-lucide-square-pen
+                                                class="h-10 w-10 transition-all duration-150 hover:h-11 hover:w-11 hover:stroke-2" />
                                         </button>
+                                        <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
+                                            method="post"
+                                            onsubmit="return confirm('Deseja realmente excluir este comentário?')"
+                                            class="flex flex-col justify-center items-center h-1/2 py-2 pl-1 bg-red-200 rounded-bl-md">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit">
+                                                <x-lucide-trash
+                                                    class="text-red-500 w-10 h-10 transition-all duration-150 hover:h-11 hover:w-11 hover:stroke-2" />
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endauth
+                            </div>
+                            @auth
+                                <div id="edit-{{ $comment->id }}" class="py-2" hidden>
+                                    <form action="{{ route('comment.edit', $comment->id) }}" method="post"
+                                        class="flex flex-col gap-2 items-end">
+                                        @csrf
+                                        <textarea name="editComment" id="editComment-{{ $comment->id }}"
+                                            class="w-full h-30 border ring-2 ring-gray-700 rounded-sm p-2">{{ old('editComment') ? old('editComment') : $comment->comment }}</textarea>
+                                        <input type="submit" value="Editar"
+                                            class="border w-max px-2 rounded-2xl bg-gray-100/80 text-gray-700 font-semibold text-lg flex items-center justify-center">
                                     </form>
                                 </div>
-                            </div>
-                            {{-- <div>
-                                <form action="" method="post"></form>
-                            </div> --}}
+                            @endauth
                         </li>
                     @endforeach
                 </ul>

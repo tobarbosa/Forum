@@ -54,6 +54,17 @@
             rightButtonStyle.replace(/(text-gray-)[\d]+/, "$10")
         nextButton.setAttribute('class', rightButtonStyle);
     }
+
+    function editComment(commentId, comment) {
+        let edit = document.getElementById("edit-" + commentId);
+        let editComment = document.getElementById("editComment-" + commentId);
+
+        edit.hidden = !edit.hidden;
+
+        if (!edit.hidden) {
+            editComment.value = comment;
+        }
+    }
 </script>
 
 <?php
@@ -191,8 +202,8 @@
                 <ul>
                     <?php $__currentLoopData = $topic->comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="">
-                            <div class="flex flex-raw border">
-                                <div class="flex flex-col gap-1 w-19/20 p-2">
+                            <div id="comment-<?php echo e($comment->id); ?>" class="flex flex-raw border">
+                                <div class="flex flex-col gap-1 p-2 <?php echo e(Auth::check() ? 'w-19/20' : 'w-full'); ?>">
                                     <div class="font-bold">
                                         <p><?php echo e($comment->user->name); ?></p>
                                         <p class="text-xs"><?php echo e($comment->user->username); ?></p>
@@ -206,9 +217,11 @@
 
                                     </p>
                                 </div>
-                                <div class="flex flex-col gap-1 w-1/20 text-gray-700 p-1">
-                                    <button class="flex justify-center items-center h-1/2 bg-red-200 rounded-tl-md">
-                                        <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+                                <?php if(auth()->guard()->check()): ?>
+                                    <div class="flex flex-col gap-1 w-1/20 text-gray-700 p-1">
+                                        <button class="flex justify-center items-center h-1/2 bg-red-200 rounded-tl-md"
+                                            onclick="editComment(<?php echo e($comment->id); ?>, <?php echo e(Js::from($comment->comment)); ?>)">
+                                            <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
 <?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('lucide-square-pen'); ?>
@@ -228,16 +241,16 @@
 <?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
 <?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
 <?php endif; ?>
-                                    </button>
-                                    <form action="<?php echo e(route('comment.delete', ['comment' => $comment->id])); ?>"
-                                        method="post"
-                                        onsubmit="return confirm('Deseja realmente excluir este comentário?')"
-                                        class="flex flex-col justify-center items-center h-1/2 py-2 pl-1 bg-red-200 rounded-bl-md">
-                                        <?php echo csrf_field(); ?>
-                                        <?php echo method_field('DELETE'); ?>
+                                        </button>
+                                        <form action="<?php echo e(route('comment.delete', ['comment' => $comment->id])); ?>"
+                                            method="post"
+                                            onsubmit="return confirm('Deseja realmente excluir este comentário?')"
+                                            class="flex flex-col justify-center items-center h-1/2 py-2 pl-1 bg-red-200 rounded-bl-md">
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('DELETE'); ?>
 
-                                        <button type="submit">
-                                            <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+                                            <button type="submit">
+                                                <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
 <?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('lucide-trash'); ?>
@@ -257,11 +270,23 @@
 <?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
 <?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
 <?php endif; ?>
-                                        </button>
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <?php if(auth()->guard()->check()): ?>
+                                <div id="edit-<?php echo e($comment->id); ?>" class="py-2" hidden>
+                                    <form action="<?php echo e(route('comment.edit', $comment->id)); ?>" method="post"
+                                        class="flex flex-col gap-2 items-end">
+                                        <?php echo csrf_field(); ?>
+                                        <textarea name="editComment" id="editComment-<?php echo e($comment->id); ?>"
+                                            class="w-full h-30 border ring-2 ring-gray-700 rounded-sm p-2"><?php echo e(old('editComment') ? old('editComment') : $comment->comment); ?></textarea>
+                                        <input type="submit" value="Editar"
+                                            class="border w-max px-2 rounded-2xl bg-gray-100/80 text-gray-700 font-semibold text-lg flex items-center justify-center">
                                     </form>
                                 </div>
-                            </div>
-                            
+                            <?php endif; ?>
                         </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>

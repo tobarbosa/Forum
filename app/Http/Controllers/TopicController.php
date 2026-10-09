@@ -98,6 +98,10 @@ class TopicController extends Controller
 
     public function index(Topic $id)
     {
+        $id->load(['comments' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }]);
+
         return view('topicPage', [
             'topic' => $id
         ]);

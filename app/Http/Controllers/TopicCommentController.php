@@ -19,7 +19,7 @@ class TopicCommentController extends Controller
         $input['topic_id'] = $topic->id;
 
         TopicComment::create($input);
-        return back();
+        return back()->with('success', 'Comentário excluído com sucesso');
         // return view('topicPage', [
         //     'topic' => $topic
         // ]);
@@ -28,6 +28,18 @@ class TopicCommentController extends Controller
     public function delete(TopicComment $comment)
     {
         $comment->delete();
+        return back()->with('success', 'Comentário excluído com sucesso');
+    }
+
+    public function edit(Request $request, TopicComment $comment)
+    {
+        $input = $request->validate([
+            'editComment' => 'string|required'
+        ]);
+
+        $comment->comment = $input['editComment'];
+        $comment->save();
+
         return back()->with('success', 'Comentário excluído com sucesso');
     }
 }
