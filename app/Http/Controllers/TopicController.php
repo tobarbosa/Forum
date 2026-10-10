@@ -96,6 +96,12 @@ class TopicController extends Controller
         ]);
     }
 
+    public function delete(Topic $topic)
+    {
+        $topic->delete();
+        return back()->with('success', 'Tópico excluído com sucesso');
+    }
+
     public function index(Topic $id)
     {
         $id->load(['comments' => function ($query) {
@@ -107,9 +113,12 @@ class TopicController extends Controller
         ]);
     }
 
-    public function delete(Topic $topic)
+    public function show()
     {
-        $topic->delete();
-        return back()->with('success', 'Tópico excluído com sucesso');
+        $topics = Topic::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('topics', [
+            'topics' => $topics
+        ]);
     }
 }

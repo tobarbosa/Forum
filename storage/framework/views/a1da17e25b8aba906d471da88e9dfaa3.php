@@ -39,8 +39,7 @@
 
                 <!-- Topics -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="<?php echo e(''); ?>"
-                        class="<?php echo e(request()->routeIs('dashboard') ? $currentBar : $sideBar); ?>">
+                    <a href="<?php echo e(route('topic')); ?>" class="<?php echo e(request()->routeIs('topic') ? $currentBar : $sideBar); ?>">
                         <?php echo e(__('Tópicos')); ?>
 
                     </a>
@@ -51,14 +50,6 @@
                     <a href="<?php echo e(''); ?>"
                         class="<?php echo e(request()->routeIs('profile.edit') ? $currentBar : $sideBar); ?>">
                         <?php echo e(__('Usuários')); ?>
-
-                    </a>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="<?php echo e(''); ?>"
-                        class="<?php echo e(request()->routeIs('profile.edit') ? $currentBar : $sideBar); ?>">
-                        <?php echo e(__('teste')); ?>
 
                     </a>
                 </div>

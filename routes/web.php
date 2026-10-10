@@ -39,6 +39,7 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('topics')->group(function () {
+    Route::get('/', [TopicController::class, 'show'])->name('topic');
     Route::get('{id}', [TopicController::class, 'index'])->name('topic.index');
     Route::post('store', [TopicController::class, 'store'])->middleware(['auth', 'verified'])->name('topic.store');
     Route::post('edit/{topic}', [TopicController::class, 'edit'])->middleware(['auth', 'verified'])->name('topic.edit');

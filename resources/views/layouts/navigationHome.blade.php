@@ -19,8 +19,7 @@
 
                 <!-- Topics -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="{{ '' }}"
-                        class="{{ request()->routeIs('dashboard') ? $currentBar : $sideBar }}">
+                    <a href="{{ route('topic') }}" class="{{ request()->routeIs('topic') ? $currentBar : $sideBar }}">
                         {{ __('Tópicos') }}
                     </a>
                 </div>
@@ -30,13 +29,6 @@
                     <a href="{{ '' }}"
                         class="{{ request()->routeIs('profile.edit') ? $currentBar : $sideBar }}">
                         {{ __('Usuários') }}
-                    </a>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="{{ '' }}"
-                        class="{{ request()->routeIs('profile.edit') ? $currentBar : $sideBar }}">
-                        {{ __('teste') }}
                     </a>
                 </div>
             </div>
