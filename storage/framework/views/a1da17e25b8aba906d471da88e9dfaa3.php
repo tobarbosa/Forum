@@ -47,8 +47,7 @@
 
                 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="<?php echo e(''); ?>"
-                        class="<?php echo e(request()->routeIs('profile.edit') ? $currentBar : $sideBar); ?>">
+                    <a href="<?php echo e(route('users')); ?>" class="<?php echo e(request()->routeIs('users') ? $currentBar : $sideBar); ?>">
                         <?php echo e(__('Usuários')); ?>
 
                     </a>

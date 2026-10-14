@@ -7,16 +7,16 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function show(User $user)
+    public function index(User $user)
     {
         return view('user', [
             'user' => $user
         ]);
     }
 
-    public function index()
+    public function show()
     {
-        $users = User::all();
+        $users = User::orderBy('created_at', 'desc')->paginate(9);
         return view('users', [
             'users' => $users
         ]);

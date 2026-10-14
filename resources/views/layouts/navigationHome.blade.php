@@ -26,8 +26,7 @@
 
                 {{-- Users --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="{{ '' }}"
-                        class="{{ request()->routeIs('profile.edit') ? $currentBar : $sideBar }}">
+                    <a href="{{ route('users') }}" class="{{ request()->routeIs('users') ? $currentBar : $sideBar }}">
                         {{ __('Usuários') }}
                     </a>
                 </div>

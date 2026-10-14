@@ -33,9 +33,9 @@ Route::get('request', function (Request $request) {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('users');
+    Route::get('/', [UserController::class, 'show'])->name('users');
 
-    Route::get('{user}', [UserController::class, 'show']);
+    Route::get('{user}', [UserController::class, 'index'])->name('user.index');
 });
 
 Route::prefix('topics')->group(function () {
