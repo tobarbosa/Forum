@@ -17,13 +17,12 @@
             <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a class="border w-50 h-80 rounded-md overflow-hidden" href="<?php echo e(route('user.index', $user->id)); ?>">
                     <img src="<?php echo e($user->photo === $standardPhoto ? asset($user->photo) : Storage::url($user->photo)); ?>"
-                        alt="<?php echo e($user->name); ?>" class="h-5/7 w-full">
-                    <div class="flex flex-col items-start h-2/7 w-full p-2">
+                        alt="<?php echo e($user->name); ?>" class="h-8/10 w-full">
+                    <div class="flex flex-col items-start h-2/10 w-full p-2">
                         <p class="w-full truncate text-start font-semibold text-base"><?php echo e($user->name); ?></p>
                         <p class="w-full truncate text-start font-semibold text-base"><?php echo e($user->username); ?>
 
                         </p>
-                        <p class="w-full truncate text-start font-semibold text-base"><?php echo e($user->email); ?></p>
                     </div>
                 </a>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

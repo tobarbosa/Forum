@@ -19,12 +19,11 @@
             @foreach ($users as $user)
                 <a class="border w-50 h-80 rounded-md overflow-hidden" href="{{ route('user.index', $user->id) }}">
                     <img src="{{ $user->photo === $standardPhoto ? asset($user->photo) : Storage::url($user->photo) }}"
-                        alt="{{ $user->name }}" class="h-5/7 w-full">
-                    <div class="flex flex-col items-start h-2/7 w-full p-2">
+                        alt="{{ $user->name }}" class="h-8/10 w-full">
+                    <div class="flex flex-col items-start h-2/10 w-full p-2">
                         <p class="w-full truncate text-start font-semibold text-base">{{ $user->name }}</p>
                         <p class="w-full truncate text-start font-semibold text-base">{{ $user->username }}
                         </p>
-                        <p class="w-full truncate text-start font-semibold text-base">{{ $user->email }}</p>
                     </div>
                 </a>
             @endforeach

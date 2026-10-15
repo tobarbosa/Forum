@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserController extends Controller
 {
     public function index(User $user)
     {
+        $topics = $user->topics->isNotEmpty() ? $user->topics()->orderBy('created_at', 'desc')->paginate(10) : new Collection;
+
         return view('user', [
-            'user' => $user
+            'user' => $user,
+            'topics' => $topics
         ]);
     }
 
